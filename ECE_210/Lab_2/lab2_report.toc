@@ -1,13 +1,13 @@
 \contentsline {section}{\numberline {1}Abstract}{1}
 \contentsline {section}{\numberline {2}Introduction}{1}
 \contentsline {section}{\numberline {3}Design Section}{1}
-\contentsline {paragraph}{Part 1}{1}
-\contentsline {paragraph}{Part 2}{1}
-\contentsline {section}{\numberline {4}Procedure}{1}
-\contentsline {paragraph}{Part 1}{1}
-\contentsline {paragraph}{Part 2}{1}
-\contentsline {section}{\numberline {5}Results}{1}
-\contentsline {paragraph}{Part 1}{1}
-\contentsline {paragraph}{Part 2}{1}
-\contentsline {section}{\numberline {6}Discussion}{1}
-\contentsline {section}{\numberline {7}Conclusion}{1}
+\contentsline {paragraph}{MUX / DEMUX Circuit}{1}
+\contentsline {paragraph}{Lab Access Control Circuit}{2}
+\contentsline {section}{\numberline {4}Procedure}{2}
+\contentsline {paragraph}{Part 1}{2}
+\contentsline {paragraph}{Part 2}{2}
+\contentsline {section}{\numberline {5}Results}{2}
+\contentsline {paragraph}{Part 1}{2}
+\contentsline {paragraph}{Part 2}{2}
+\contentsline {section}{\numberline {6}Discussion}{2}
+\contentsline {section}{\numberline {7}Conclusion}{2}

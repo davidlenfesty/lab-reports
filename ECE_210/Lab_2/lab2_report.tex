@@ -68,6 +68,7 @@
 
     In order to implement a simple multiplexing and demultiplexing system, the following circuit had to be implemented using VHDL.
 
+    \newpage
 
     \begin{circuitikz}
         \draw
@@ -76,21 +77,45 @@
             (IS0.in 1) node[anchor=east]{S0'}
             (IS0.in 2) node[anchor=east]{S1'}
             (IS0.out) -| (sig_in_0.in 1)
-            (sig_in_0.in 2) node[anchor=east]{I0}
+            (-2,-1) node[anchor=east, color=red]{I0} -| (sig_in_0.in 2)
 
             (0,-2) node[american and port](IS1){}
             (2,-3) node[american and port](sig_in_1){}
             (IS1.in 1) node[anchor=east]{S0}
             (IS1.in 2) node[anchor=east]{S1'}
             (IS1.out) -| (sig_in_1.in 1)
-            (sig_in_1.in 2) node[anchor=east]{I1}
+            (-2,-3) node[anchor=east, color=red]{I1} -| (sig_in_1.in 2)
 
             (0,-4) node[american and port](IS2){}
             (2,-5) node[american and port](sig_in_2){}
             (IS2.in 1) node[anchor=east]{S0}
             (IS2.in 2) node[anchor=east]{S1'}
             (IS2.out) -| (sig_in_2.in 1)
-            (sig_in_2.in 2) node[anchor=east]{I1}
+            (-2,-5) node[anchor=east, color=red]{I2} -| (sig_in_2.in 2)
+
+            (4,-2) node[american or port](mux_or_1){}
+            (6,-3) node[american or port](mux_or_2){}
+            (sig_in_0.out) -| (mux_or_1.in 1){}
+            (sig_in_1.out) -| (mux_or_1.in 2){}
+            (mux_or_1.out) -| (mux_or_2.in 1){}
+            (sig_in_2.out) -| (mux_or_2.in 2){}
+
+            (2,-8)  node[american and port](eng0_sel){}
+            (4,-7)  node[american and port](eng0_sig){}
+            (eng0_sel.in 1) node[anchor=east]{DS0'}
+            (eng0_sel.in 2) node[anchor=east]{DS1'}
+            (eng0_sel.out) -| (eng0_sig.in 2){}
+            (eng0_sig.out) -| (7,-7) node[anchor=west]{E0}
+
+            (2,-10) node[american and port](eng1_sel){}
+            (4,-9)  node[american and port](eng1_sig){}
+            (2,-12) node[american and port](eng2_sel){}
+            (4,-11) node[american and port](eng2_sig){}
+
+
+            (mux_or_2.out) node[anchor=south]{Z} -| (8,-3) -| (8,-6)
+            -| (0,-6) -| (0,-7) -| (1,-7) -| (eng0_sig.in 1)
+
         ;
     \end{circuitikz}
 

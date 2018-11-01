@@ -70,6 +70,7 @@
 
     \begin{circuitikz}
         \draw
+            % Input selection 0
             (0,0) node[american and port](IS0){}
             (2,-1) node[american and port](sig_in_0){}
             (IS0.in 1) node[anchor=east]{S0'}
@@ -77,6 +78,7 @@
             (IS0.out) -| (sig_in_0.in 1)
             (-2,-1) node[anchor=east, color=green]{I0} -| (sig_in_0.in 2)
 
+            % Input selection 1
             (0,-2) node[american and port](IS1){}
             (2,-3) node[american and port](sig_in_1){}
             (IS1.in 1) node[anchor=east]{S0}
@@ -84,6 +86,7 @@
             (IS1.out) -| (sig_in_1.in 1)
             (-2,-3) node[anchor=east, color=green]{I1} -| (sig_in_1.in 2)
 
+            % Input selection 2
             (0,-4) node[american and port](IS2){}
             (2,-5) node[american and port](sig_in_2){}
             (IS2.in 1) node[anchor=east]{S0}
@@ -91,6 +94,7 @@
             (IS2.out) -| (sig_in_2.in 1)
             (-2,-5) node[anchor=east, color=green]{I2} -| (sig_in_2.in 2)
 
+            % OR accumulation for inputs
             (4,-2) node[american or port](mux_or_1){}
             (6,-3) node[american or port](mux_or_2){}
             (sig_in_0.out) -| (mux_or_1.in 1){}
@@ -98,6 +102,7 @@
             (mux_or_1.out) -| (mux_or_2.in 1){}
             (sig_in_2.out) -| (mux_or_2.in 2){}
 
+            % Engineer 0 selection
             (2,-8)  node[american and port](eng0_sel){}
             (4,-7)  node[american and port](eng0_sig){}
             (eng0_sel.in 1) node[anchor=east]{DS0'}
@@ -105,6 +110,7 @@
             (eng0_sel.out) -| (eng0_sig.in 2){}
             (eng0_sig.out) -| (7,-7) node[anchor=west, color=red]{E0}
 
+            % Engineer 1 selection
             (2,-10) node[american and port](eng1_sel){}
             (4,-9)  node[american and port](eng1_sig){}
             (eng1_sel.in 1) node[anchor=east]{DS0'}
@@ -112,6 +118,7 @@
             (eng1_sel.out) -| (eng1_sig.in 2){}
             (eng1_sig.out) -| (7,-9) node[anchor=west, color=red]{E1}
 
+            % Engineer 2 selection
             (2,-12) node[american and port](eng2_sel){}
             (4,-11) node[american and port](eng2_sig){}
             (eng2_sel.in 1) node[anchor=east]{DS0'}
@@ -120,18 +127,87 @@
             (eng2_sig.out) -| (7,-11) node[anchor=west, color=red]{E1}
 
 
+            % Intermediate signal 'Z'
             (mux_or_2.out) node[anchor=south]{Z} -| (8,-3) -| (8,-6)
             -| (-2,-6) -| (-2,-7) -| (1,-7) -| (eng0_sig.in 1)
             (-2,-6) -- (-2,-9) -| (eng1_sig.in 1)
             (-2,-6) -- (-2,-11) -| (eng2_sig.in 1)
-
-
         ;
     \end{circuitikz}
 
 
 
     \paragraph{Lab Access Control Circuit}
+    We have to do this circuit:
+
+    \begin{circuitikz}
+        \draw
+            % Ports for lab0 selection
+            (4,0) node[american and port](lab0-card){}
+            (4,-2) node[american and port](lab0-code){}
+            (1,-0.275) node[american not port](not1){}
+            (1,-1.725) node[american not port](not2){}
+
+            (0,0.5) node[anchor=east]{C1} -| (lab0-card.in 1)
+            (0,-0.5) node[anchor=east]{C0} -| (not1.in)
+            (not1.out) |- (lab0-card.in 2)
+
+            (0,-1.5) node[anchor=east]{K2} -| (not2.in)
+            (not2.out) |- (lab0-code.in 1)
+            (0,-2.5) node[anchor=east]{K0} -| (lab0-code.in 2)
+
+            (6, -1) node[american and port](lab0-out){}
+            (lab0-card.out) -| (lab0-out.in 1)
+            (lab0-code.out) -| (lab0-out.in 2)
+
+            % Ports for lab1 selection
+            (4,-4) node[american and port](lab1-card){}
+            (4,-6) node[american and port](lab1-code){}
+            (1,-4.3) node[american not port](not1){}
+            (1,-5.725) node[american not port](not2){}
+
+            (0,-3.5) node[anchor=east]{C0} -| (lab1-card.in 1)
+            (0,-4.5) node[anchor=east]{C1} -| (not1.in)
+            (not1.out) |- (lab1-card.in 2)
+
+            (0,-5.5) node[anchor=east]{K0} -| (not2.in)
+            (not2.out) |- (lab1-code.in 1)
+            (0,-6.5) node[anchor=east]{K2} -| (lab1-code.in 2)
+
+            (6, -5) node[american and port](lab1-out){}
+            (lab1-card.out) -| (lab1-out.in 1)
+            (lab1-code.out) -| (lab1-out.in 2)
+
+            % Outputs for lab0/1
+            (lab0-out.out) -| (8,-1) node[anchor=west, color=dkgreen]{Lab0-Unlock}
+            (lab1-out.out) -| (8,-5) node[anchor=west, color=dkgreen]{Lab1-Unlock}
+
+            % Alarm gates
+            (3,-12) node[american or port](alarm-card){}
+            (6,-10) node[american and port](code-not){}
+            (9,-11) node[american and port](alarm){}
+
+            % Inverters for and port
+            (3, -9.25) node[american not port](not3){}
+            (3, -10.75) node[american not port](not4){}
+            
+            % Lab0 and 1 unlock routing
+            (6.5,-1) -- (6.5,-7) -| (1,-7) -| (1,-9.25) -| (not3.in)
+            (7, -5) -- (7,-7.5) -| (1.5,-7.5) -| (1.5, -10.75) -| (not4.in)
+            (not3.out) -| (code-not.in 1)
+            (not4.out) -| (code-not.in 2)
+
+            % Card inputs
+            (1,-11.5) node[anchor=east]{C1} -| (alarm-card.in 1)
+            (1,-12.5) node[anchor=east]{C0} -| (alarm-card.in 2)
+
+            % Final card inputs/outputs
+            (code-not.out) -| (alarm.in 1)
+            (alarm-card.out) -| (alarm.in 2)
+            (alarm.out) |- (10,-11) node[anchor=west,color=red]{Alarm}
+
+        ;
+    \end{circuitikz}
 
     \section{Procedure}
     We typed things

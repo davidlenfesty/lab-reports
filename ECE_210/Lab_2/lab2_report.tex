@@ -10,6 +10,11 @@
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{mauve}{rgb}{0.58,0,0.82}
 
+\lstset{basicstyle=\small,
+        keywordstyle=\color{mauve},
+        identifierstyle=\color{dkgreen},
+        stringstyle=\color{gray}
+        }
 
 \title{ECE 210 - Combinational Logic Design \\ Lab 2}
 \date{2018-10-24}
@@ -62,13 +67,14 @@
     \section{Design Section}
 
     In order to design the following circuits, the Xilinx Vivado software
-    was used to write VHDL that described the logic circuit.
+    was used to write VHDL that described the different logic circuits.
 
 
+    \newpage
     \paragraph{MUX / DEMUX Circuit}
-    In order to implement a simple multiplexing and demultiplexing system, the following circuit had to be implemented using VHDL.
+    In order to implement required multiplexing and demultiplexing system, the following circuit had to be implemented using VHDL.
 
-    \begin{circuitikz}
+    \begin{circuitikz}[scale=0.75, transform shape]
         \draw
             % Input selection 0
             (0,0) node[american and port](IS0){}
@@ -135,12 +141,40 @@
         ;
     \end{circuitikz}
 
+    The folllowing VHDL architecture was written to implement this circuit in hardware.
+
+    \begin{lstlisting}[language=VHDL]
+architecture Behavioral of lab2_part1 is
+    signal M   : STD_LOGIC := '0';
+    signal SEL : STD_LOGIC_VECTOR (2 downto 0) := "000";
+begin
+    M <=   ((not S(1) and not S(0)) and I(0))
+        or ((not S(1) and S(0)) and I(1))
+        or (( S(1) and not S(0) ) and I(2));
+    
+    SEL(0) <= (not DS(1) and not DS(0));
+    SEL(1) <= (not DS(1) and DS(0));
+    SEL(2) <= (DS(1) and not DS(0)); 
+    
+    O(0) <= M and SEL(0);
+    O(1) <= M and SEL(1);
+    O(2) <= M and SEL(2);
+    
+    EI(0) <= SEL(0);
+    EI(1) <= SEL(1);
+    EI(2) <= SEL(2);
+end Behavioral;
+    \end{lstlisting}
+
+
+    \newpage
+
 
 
     \paragraph{Lab Access Control Circuit}
     We have to do this circuit:
 
-    \begin{circuitikz}
+    \begin{circuitikz}[scale=0.75, transform shape]
         \draw
             % Ports for lab0 selection
             (4,0) node[american and port](lab0-card){}
@@ -208,6 +242,27 @@
 
         ;
     \end{circuitikz}
+
+    The following VHDL architecture was written to implement this circuit in hardware.
+
+    \begin{lstlisting}[language=VHDL]
+architecture Behavioral of lab2_part2 is
+    signal Lab0_Correct : STD_LOGIC := '0';
+    signal Lab1_Correct : STD_LOGIC := '0';
+begin
+
+    Lab0_Correct <= (C(1) and not C(0))
+                and (K(0) and not K(2));
+    Lab1_Correct <= (not C(1) and C(0))
+                and (not K(0) and K(2));
+    
+    Lab0_Unlock <= Lab0_Correct;
+    Lab1_Unlock <= Lab1_Correct;
+    
+    Alarm <= (C(1) or C(0))
+         and (not Lab0_Correct and not Lab1_Correct);
+end Behavioral;
+    \end{lstlisting}
 
     \section{Procedure}
     We typed things

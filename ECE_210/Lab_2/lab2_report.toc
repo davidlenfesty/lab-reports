@@ -4,10 +4,8 @@
 \contentsline {paragraph}{MUX / DEMUX Circuit}{2}
 \contentsline {paragraph}{Lab Access Control Circuit}{4}
 \contentsline {section}{\numberline {4}Procedure}{5}
-\contentsline {paragraph}{Part 1}{5}
-\contentsline {paragraph}{Part 2}{5}
 \contentsline {section}{\numberline {5}Results}{5}
 \contentsline {paragraph}{Part 1}{5}
 \contentsline {paragraph}{Part 2}{5}
-\contentsline {section}{\numberline {6}Discussion}{5}
-\contentsline {section}{\numberline {7}Conclusion}{5}
+\contentsline {section}{\numberline {6}Discussion}{7}
+\contentsline {section}{\numberline {7}Conclusion}{7}

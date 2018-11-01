@@ -5,6 +5,7 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{circuitikz}
+\usepackage{float}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -165,14 +166,10 @@ begin
     EI(2) <= SEL(2);
 end Behavioral;
     \end{lstlisting}
-
-
     \newpage
 
-
-
     \paragraph{Lab Access Control Circuit}
-    We have to do this circuit:
+    In order to implement the required access control, the following circuit was developed.
 
     \begin{circuitikz}[scale=0.75, transform shape]
         \draw
@@ -263,30 +260,55 @@ begin
          and (not Lab0_Correct and not Lab1_Correct);
 end Behavioral;
     \end{lstlisting}
+    \newpage
 
     \section{Procedure}
-    We typed things
+    In order to test that the circuit worked properly,
+    both VHDL programs were simulated, and then the
+    access control code was ran on a physical FPGA and verified physically,
+    using buttons.
 
-    \paragraph{Part 1}
+    The circuit for part one was tested using the supplied
+    simulation file. The outputs were then verified against the expected truth table.
 
-    Simu
-
-    \paragraph{Part 2}
+    For part two, the circuit was simulated and run against another
+    supplied simulation file. It was also uploaded to an FPGA
+    board, using the provided constraints, where the functionality
+    of the access system was verified by using the physical buttons and switches on
+    the board.
 
 
     \section{Results}
-    Lights flashed
 
-    \begin{figure}[!htb]
+    \paragraph{Part 1}
+    The VHDL design worked perfectly according to the specifications laid out.
+    Below is the output from the simulation:
+
+    \begin{figure}[H]
         \includegraphics[width=\linewidth]{MUX_DEMUX.png}
-        \caption{Part 1 Simulation.}
+        \caption{Part 1 Simulation}
         \label{fig:part1_sim}
     \end{figure}
 
-    \paragraph{Part 1}
-
-
     \paragraph{Part 2}
+    The VHDL design was able to correctly control the lab access and alarm signals
+    as specified.
+    Below is an image of the simulation waveform.
+
+    \begin{figure}[H]
+        \includegraphics[width=\linewidth]{Access_control.png}
+        \caption{Part 2 Simulation}
+        \label{fig:part2_sim}
+    \end{figure}
+
+    Physical testing also proved to be correct.
+    Below is a picture of one of the input combinations being tested.
+
+    \begin{figure}[H]
+        \includegraphics[width=\linewidth]{something.jpg}
+        \caption{Part 2 Physical Testing}
+        \label{fig:part2_testing}
+    \end{figure}
 
 
     \section{Discussion}

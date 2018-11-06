@@ -37,40 +37,54 @@
 
     \section{Abstract}
 
-    Various logic circuit designs can be combined together to create
-    functional applications.
+    It is often the case that more fundamental elements in any field can be
+    combined to produce more complex and useful structures. This is certainly
+    true in the field of circuit design, where discrete elements are used
+    to create functional applications all the time.
 
-    Multiplexers and demultiplexers can be used to route specific
-    incoming signals to a specified destination. In this lab a simulated
-    digital signal from three different receivers was routed towards
-    one of three "engineers".
+    Multiplexers and demultiplexers can be used together to route specific
+    incoming signals to a specified destination one at a time through a
+    shared transmission line. The requirement of this lab was to design
+    boolean expressions realizing the functionality of multiplexers and
+    demultiplexers in the context of a real-life application.
     
-    As well, logical elements can be used to design a simplistic access control system.
-    In this lab such a circuit was designed and tested on an FPGA.
+    Another real-life application of logical elements is in an access control
+    system. A simplistic version of such a system was also designed in this
+    lab session and tested on an FPGA afterwards.
 
     \section{Introduction}
 
-    The purpose of this lab was to design a simple Multiplexer and Demultiplexer circuit,
-    as well as to design a circuit to control access to a lab.
+    The purpose of this lab was to design control circuits according to the provided
+    specifications, and then verify their operation using a simulation or an FPGA.
 
-    In order to validate the Multiplexer/Demultiplexer circuit,
-    a useful circuit was designed using Xilinx Vivado software,
-    and this circuit was simulated against the required inputs.
+    In the first part of the lab, a series of boolean expressions
+    were designed to implement a Multiplexer/Demultiplexer circuit,
+    intended to route data from one of three radio recievers to one
+    of three engineers, and signal which engineer was currently
+    recieving data.
+    First, Xilinx Vivado Software was used to produce a circuit
+    to fulfill this objective. Then, using the same software,
+    the circuit was simulated against input combinations which
+    would be encountered during normal use, for verification.
 
-    In order to test the Lab Access Control circuit, the circuit was again designed
-    using Xilinx Vivado, and simulated against required inputs.
-    However, for this section, the design was also uploaded to a physical board
-    where various inputs could be physically tested and validated.
+    For the second part of the lab, an Access Control circuit was to be designed,
+    allowing lab entry only if a valid ID was provided alongside a proper keypad
+    combination. Otherwise, an alarm signal was to be sent out.
+    The method of designing this circuit was very similar to the method in part one:
+    Again using Xilinx Vivado, the circuit was designed and simulated against inputs
+    to verify if the outputs matched those in the specification.
+    However, for this section, the design was also uploaded to a physical FPGA board
+    where various could be manually tested and validated.
 
     \section{Design Section}
 
-    In order to design the following circuits, the Xilinx Vivado software
-    was used to write VHDL that described the different logic circuits.
+    In order to design the desired systems, the Xilinx Vivado software was
+    used to write VHDL code that described the operation of each circuit.
 
 
     \newpage
     \paragraph{MUX / DEMUX Circuit}
-    In order to implement required multiplexing and demultiplexing system, the following circuit had to be implemented using VHDL.
+    To implement the multiplexing/demultiplexing system, the following circuit had to be written in VHDL.
 
     \begin{circuitikz}[scale=0.75, transform shape]
         \draw
@@ -139,7 +153,7 @@
         ;
     \end{circuitikz}
 
-    The folllowing VHDL architecture was written to implement this circuit in hardware.
+    The VHDL architecture below was written to implement this circuit in hardware.
 
     \begin{lstlisting}[language=VHDL]
 architecture Behavioral of lab2_part1 is
@@ -164,7 +178,7 @@ end Behavioral;
     \newpage
 
     \paragraph{Lab Access Control Circuit}
-    In order to implement the required access control, the following circuit was developed.
+    To implement lab access control as described, the following circuit was developed.
 
     \begin{circuitikz}[scale=0.75, transform shape]
         \draw
@@ -235,7 +249,7 @@ end Behavioral;
         ;
     \end{circuitikz}
 
-    The following VHDL architecture was written to implement this circuit in hardware.
+    The VHDL architecture written to implement this circuit in hardware is next:
 
     \begin{lstlisting}[language=VHDL]
 architecture Behavioral of lab2_part2 is
@@ -258,19 +272,19 @@ end Behavioral;
     \newpage
 
     \section{Procedure}
-    In order to test that the circuit worked properly,
-    both VHDL programs were simulated, and then the
-    access control code was ran on a physical FPGA and verified physically,
-    using buttons.
+    In order to test that each circuit worked properly, the
+    corresponding VHDL programs were simulated. Then, a physical
+    FPGA was programmed with the access control code and the
+    design was verified using buttons.
 
-    The circuit for part one was tested using the supplied
-    simulation file. The outputs were then verified against the expected truth table.
+    The circuit for part one was tested using the supplied simulation
+    file. The outputs were then checked against the expected truth table.
 
     For part two, the circuit was simulated and run against another
-    supplied simulation file. It was also uploaded to an FPGA
+    supplied simulation file. Additionally, it was uploaded to an FPGA
     board, using the provided constraints, where the functionality
-    of the access system was verified by using the physical buttons and switches on
-    the board.
+    of the access system was verified by using the physical buttons
+    and switches on the board.
 
 
     \section{Results}
@@ -281,27 +295,25 @@ end Behavioral;
 
     \begin{figure}[H]
         \includegraphics[width=\linewidth]{MUX_DEMUX.png}
-        \caption{Part 1 Simulation}
+        \caption{Results from Multiplexer/Demultiplexer circuit simulation in Xilinx Vivado}
         \label{fig:part1_sim}
     \end{figure}
 
     \paragraph{Part 2}
     The VHDL design was able to correctly control the lab access and alarm signals
-    as specified.
-    Below is an image of the simulation waveform.
+    as specified, both in the simulated results and the tests on the physical board.
+    Below are images of the simulation waveform and a physical test of one of the
+    input combinations.
 
     \begin{figure}[H]
         \includegraphics[width=\linewidth]{Access_control.png}
-        \caption{Part 2 Simulation}
+        \caption{Results from Lab Access Control circuit simulation in Xilinx Vivado}
         \label{fig:part2_sim}
     \end{figure}
 
-    Physical testing also proved to be correct.
-    Below is a picture of one of the input combinations being tested.
-
     \begin{figure}[H]
         \includegraphics[width=\linewidth]{access_testing.jpg}
-        \caption{Part 2 Physical Testing}
+        \caption{Physically Testing the Lab Access Control system on an FPGA board}
         \label{fig:part2_testing}
     \end{figure}
 
@@ -345,8 +357,14 @@ end Behavioral;
 
 
     \section{Conclusion}
-    FPGAs are useful tools for the design and development of functional circuits.
-    These circuits can borrow ideas and methods of operation from each other.
+    It is sometimes necessary in real-life applications to use the fundamental elements
+    of circuit technology to implement boolean expressions in hardware, when such
+    hardware may be unavailable. Even if these packages may be purchased from a
+    manufacturer, sometimes a situation may call for an implementation that cannot
+    use these elements.
+    Also, FPGAs are useful tools for the quick design and development of functional circuits.
+    These circuits can borrow ideas and methods of operation from each other to more
+    efficiently and creatively implement the desired functionality.
 
 \end{document}
 

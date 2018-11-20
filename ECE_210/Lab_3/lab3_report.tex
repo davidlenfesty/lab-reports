@@ -85,15 +85,15 @@ the 7 segment display.
 \paragraph{Part 4:}
 
 If the signal controlling which of the two displays are on is inverted 
-extremely quickly (>~200Hz), we can take advantage of the limitations
+extremely quickly (more than approximately 200Hz), we can take advantage of the limitations
 of the human eye to make it appear that both displays are on at the same time.
-This functionality can easily be implement by using behavioural logic to
+This functionality can easily be implemented by using behavioural logic to
 toggle the control signal on the positive edge of every clock cycle.
 
 \section{Results}
 
 For all parts of this lab, the display behaved as expected,
-displaying the corrected hexadecimal digit for the 4-bit input.
+displaying the correct hexadecimal digit for the 4-bit input.
 Using the example code, the counter updated once a second, and we were able
 to show this information on two screens at once.
 
@@ -107,6 +107,9 @@ portions of the design onto the synthesizer.
 This means that new features and functionality can be quickly and simply designed.
 
 \newpage
+
+
+\appendix
 
 \section{Images}
 

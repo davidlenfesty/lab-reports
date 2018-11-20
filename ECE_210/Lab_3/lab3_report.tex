@@ -111,6 +111,51 @@ This means that new features and functionality can be quickly and simply designe
 
 \appendix
 
+\section{Code}
+
+\begin{lstlisting}[language=VHDL]
+entity part1 is
+    Port ( sw : in STD_LOGIC_VECTOR (3 downto 0);
+           out_7seg : out STD_LOGIC_VECTOR (6 downto 0);
+           CC : out STD_LOGIC);
+end part1;
+
+architecture Behavioral of part1 is
+    signal I : STD_LOGIC_VECTOR (18 downto 1);
+begin
+     CC <= '0';
+
+     I(1)  <= not sw(2) and not sw(0);
+     I(2)  <=  not sw(3) and sw(1) and sw(0);
+     I(3)  <= sw(3) and not sw(1) and not sw(0);
+     I(4)  <= sw(3) and not sw(2) and not sw(1);
+     I(5)  <= sw(2) and sw(1) and not sw(0);
+     I(6)  <= sw(3) and sw(2) and sw(1);
+     I(7)  <= not sw(3) and sw(2) and sw(0);
+     I(8)  <= not sw(3) and not sw(1) and not sw(0);
+     I(9)  <= sw(3) and not sw(1) and sw(0);
+     I(10) <= not sw(2) and not sw(1);
+     I(11) <= not sw(2) and sw(1) and sw(0);
+     I(12) <= sw(3) and not sw(2) and sw(1);
+     I(13) <= not sw(3) and sw(2);
+     I(14) <= sw(2) and not sw(1) and sw(0);
+     I(15) <= not sw(3) and not sw(2) and not sw(0);
+     I(16) <= sw(3) and sw(2);
+     I(17) <= not sw(3) and sw(2) and not sw(1);
+     I(18) <= not sw(2) and sw(1);
+     
+     out_7seg(0) <= I(1) or I(2) or I(3) or I(4) or I(5) or I(6) or I(7);
+     out_7seg(1) <= I(1) or I(2) or I(8) or I(9) or I(10);
+     out_7seg(2) <= I(9) or I(10) or I(11) or I(12) or I(13);
+     out_7seg(3) <= I(3) or I(4) or I(5) or I(11) or I(14) or I(15);
+     out_7seg(4) <= I(1) or I(3) or I(5) or I(12) or I(16);
+     out_7seg(5) <= I(3) or I(4) or I(5) or I(6) or I(8) or I(12) or I(17);
+     out_7seg(6) <= I(4) or I(5) or I(6) or I(9) or I(17) or I(18);
+
+
+end Behavioral;
+\end{lstlisting}
+
 \section{Images}
 
     \begin{figure}[H]

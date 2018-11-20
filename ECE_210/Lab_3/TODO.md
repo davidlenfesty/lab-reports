@@ -1,0 +1,3 @@
+- Reference code properly
+- Radomir wants to fiddle around with appendix labels
+- More proofreading

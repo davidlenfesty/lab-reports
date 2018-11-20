@@ -7,6 +7,9 @@
 \usepackage{circuitikz}
 \usepackage{float}
 
+% Set margins to 0.5inch
+\usepackage[margin=1in]{geometry}
+
 
 \title{ECE 210 - Combinational Logic Design \\ Lab 3}
 \date{2018-11-07}
@@ -94,21 +97,7 @@ displaying the corrected hexadecimal digit for the 4-bit input.
 Using the example code, the counter updated once a second, and we were able
 to show this information on two screens at once.
 
-
-    \begin{figure}[H]
-        % Mess around with widths later
-        \includegraphics[width=115mm]{display_single.jpg}
-        \caption{Single-character hexadecimal deisplay.}
-        \label{fig:display_single}
-    \end{figure}
-
-    
-    \begin{figure}[H]
-        % Mess around with widths later
-        \includegraphics[width=115mm]{counter_dual.jpg}
-        \caption{Dual character upcounter.}
-        \label{fig:counter_dual}
-    \end{figure}
+Pictures of the display in action can be found at the end of this document, in figures 1 and 2.
 
 \section{Discussion \& Conclusion}
 
@@ -116,5 +105,25 @@ While structural code in VHDL allows a designer to design extremely efficient an
 logic circuits, behavioural code allows the designer to offload much of the tedious or complex
 portions of the design onto the synthesizer.
 This means that new features and functionality can be quickly and simply designed.
+
+\newpage
+
+\section{Images}
+
+    \begin{figure}[H]
+        % Mess around with widths later
+        \includegraphics[width=125mm]{display_single.jpg}
+        \caption{Single-character hexadecimal deisplay.}
+        \label{fig:display_single}
+    \end{figure}
+
+    
+    \begin{figure}[H]
+        % Mess around with widths later
+        \includegraphics[width=125mm]{counter_dual.jpg}
+        \caption{Dual character upcounter.}
+        \label{fig:counter_dual}
+    \end{figure}
+
 
 \end{document}

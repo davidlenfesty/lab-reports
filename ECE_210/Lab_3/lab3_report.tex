@@ -1,0 +1,124 @@
+\documentclass{article}
+
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{circuitikz}
+\usepackage{float}
+
+
+\title{ECE 210 - Combinational Logic Design \\ Lab 3}
+\date{2018-11-07}
+\author{Radomir Wasowski \\ wasowski@ualberta.ca
+        \and David Lenfesty \\ lenfesty@ualberta.ca}
+
+\setcounter{tocdepth}{2} % Show subsections
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{basicstyle=\small,
+        keywordstyle=\color{mauve},
+        identifierstyle=\color{dkgreen},
+        stringstyle=\color{gray},
+        numbers=left
+        }
+
+\begin{document}
+
+\pagenumbering{gobble}
+\doublespacing
+\maketitle
+\newpage
+
+\singlespacing
+
+\section{Abstract}
+
+Display technology allows designers to display changing and important information to users.
+By using logic gates to implement a 7-segment display that can directly output the value of a sensor,
+an effective user interface can be built.
+
+\section{Introduction}
+
+
+
+\section{Design}
+
+\paragraph{Part 1:}
+
+Because many characters, when displayed on a 7-segment display, share common elements,
+it is relatively trivial to combine logic signals using minterms or maxterms.
+Using Karnaugh maps of each different letter based on the 4-bit input, a series of logical outputs
+were found, which were then connected to the appropriate display segments.
+Because of this, the number of discrete logic elements could be vastly reduced.
+Once these signals were found, they were transcribed into a VHDL file,
+to be uploaded to an FPGA for testing.
+
+The resulting code can be found below:
+
+\textbf{Should we include the code? I feel it is very simple and could easily
+be explained.}
+
+\begin{lstlisting}[language=VHDL]
+entity part1 is
+    Port ( sw : in STD_LOGIC_VECTOR (3 downto 0);
+           out_7seg : out STD_LOGIC_VECTOR (6 downto 0);
+           CC : out STD_LOGIC);
+end part1;
+
+architecture Behavioral of part1 is
+    signal I : STD_LOGIC_VECTOR (18 downto 1);
+begin
+     CC <= '0';
+
+     I(1)  <= not sw(2) and not sw(0);
+     I(2)  <=  not sw(3) and sw(1) and sw(0);
+     I(3)  <= sw(3) and not sw(1) and not sw(0);
+     I(4)  <= sw(3) and not sw(2) and not sw(1);
+     I(5)  <= sw(2) and sw(1) and not sw(0);
+     I(6)  <= sw(3) and sw(2) and sw(1);
+     I(7)  <= not sw(3) and sw(2) and sw(0);
+     I(8)  <= not sw(3) and not sw(1) and not sw(0);
+     I(9)  <= sw(3) and not sw(1) and sw(0);
+     I(10) <= not sw(2) and not sw(1);
+     I(11) <= not sw(2) and sw(1) and sw(0);
+     I(12) <= sw(3) and not sw(2) and sw(1);
+     I(13) <= not sw(3) and sw(2);
+     I(14) <= sw(2) and not sw(1) and sw(0);
+     I(15) <= not sw(3) and not sw(2) and not sw(0);
+     I(16) <= sw(3) and sw(2);
+     I(17) <= not sw(3) and sw(2) and not sw(1);
+     I(18) <= not sw(2) and sw(1);
+     
+     out_7seg(0) <= I(1) or I(2) or I(3)
+        or I(4) or I(5) or I(6) or I(7);
+     out_7seg(1) <= I(1) or I(2) or I(8)
+        or I(9) or I(10);
+     out_7seg(2) <= I(9) or I(10) or I(11)
+        or I(12) or I(13);
+     out_7seg(3) <= I(3) or I(4) or I(5)
+        or I(11) or I(14) or I(15);
+     out_7seg(4) <= I(1) or I(3) or I(5)
+        or I(12) or I(16);
+     out_7seg(5) <= I(3) or I(4) or I(5)
+        or I(6) or I(8) or I(12) or I(17);
+     out_7seg(6) <= I(4) or I(5) or I(6)
+        or I(9) or I(17) or I(18);
+
+
+end Behavioral;
+\end{lstlisting}
+
+
+\section{Results}
+
+
+\section{Discussion}
+
+
+\section{Conclusion}
+
+\end{document}

@@ -57,8 +57,32 @@ Because of this, the number of discrete logic elements could be vastly reduced.
 Once these signals were found, they were transcribed into a VHDL file,
 to be uploaded to an FPGA for testing.
 
-The resulting code can be found below:
+\paragraph{Part 2:}
 
+Instead of defining all of the logic gates manually, VHDL also supports
+behavioural programming.
+This style is different in that the synthesizer will decide how to implement
+the code in logic, instead of the programmer doing the heavy lifting.
+By utilizing a case statement, writing the program could be made easier,
+as the designer does not have to worry about exactly how the logic should work.
+However, this method does take some of the control over how the circuit operates
+away from the designer.
+
+\paragraph{Part 3:}
+
+By using one of the inbuilt clocks on the FPGA board, a counter can be used to implement an
+upcounter with a delay.
+The signal from the clock can be sent to an internal counter which can
+be divided to fit a 1 second signal, which can then go to another counter, which can output directly to
+the 7 segment display.
+
+\paragraph{Part 4:}
+
+If the signal controlling which of the two displays are on is inverted 
+extremely quickly (>~200Hz), we can take advantage of the limitations
+of the human eye to make it appear that both displays are on at the same time.
+This functionality can easily be implement by using behavioural logic to
+toggle the control signal on the positive edge of every clock cycle.
 
 \section{Results}
 

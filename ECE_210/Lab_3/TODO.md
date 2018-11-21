@@ -1,3 +1,2 @@
-- Reference code properly
-- Radomir wants to fiddle around with appendix labels
-- More proofreading
+- Add code for the case statements? I think it'd be a lot better if it were there
+- Look over the generated pdf

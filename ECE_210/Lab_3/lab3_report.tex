@@ -6,6 +6,12 @@
 \usepackage{color}
 \usepackage{circuitikz}
 \usepackage{float}
+\usepackage[title]{appendix}
+\usepackage{etoolbox}        %Used to add colons after Appendix labels
+
+%From etoolbox. However, subsections will print with a colon ater as well
+%(apparently - I haven't tested this)
+\patchcmd{\appendices}{\quad}{: }{}{}
 
 % Set margins to 0.5inch
 \usepackage[margin=1in]{geometry}
@@ -40,16 +46,16 @@
 
 \section{Abstract}
 
-Display technology allows designers to display changing and important information to users.
-By using logic gates to implement a 7-segment display that can directly output the value of a sensor,
-an effective user interface can be built.
+When a person interacts with a digital system, it is sometimes necessary to convey certain information about the system to that person. Using a display is an effective way to make that information accessible in an easy to parse format.
+By using logic gates to implement a 7-segment display that can directly output the single-digit hexadecimal value of a sensor,
+a simple user interface can be built.
 
 \section{Introduction}
 
-In this lab we were tasked with designing VHDL circuits that were able to update a 7-segment display
-in order to display hexadecimal digits.
+In this lab, we were tasked with designing VHDL circuits that were able to update a 7-segment display
+in order to display a hexadecimal digit.
 In parts 1 \& 2, we were asked to do this using structural and behavioural logic, respectively.
-Parts 3 \& 4 tasked us to use this display to in order to count from 0x0 to 0xF, on one or two seperate displays.
+Parts 3 \& 4 tasked us with using the display that was just designed in order to count from 0x0 to 0xF, on one or two separate displays.
 
 \section{Design}
 
@@ -57,59 +63,55 @@ Parts 3 \& 4 tasked us to use this display to in order to count from 0x0 to 0xF,
 
 Because many characters, when displayed on a 7-segment display, share common elements,
 it is relatively trivial to combine logic signals using minterms or maxterms.
-Using Karnaugh maps of each different letter based on the 4-bit input, a series of logical outputs
-were found, which were then connected to the appropriate display segments.
-Because of this, the number of discrete logic elements could be vastly reduced.
+Based on the 4-bit input, a separate Karnaugh map for each segment of the display was constructed. After simultaneously analyzing all of the K-Maps for similar groups of inputs, a series of logical outputs
+were found which would show all of the  desired output numbers/letters with the smallest number of network inputs and logic gates. These values were then connected to the appropriate display segments.
+Performing such an analysis reduced the number of discrete logic elements vastly.
 Once these signals were found, they were transcribed into a VHDL file,
-to be uploaded to an FPGA for testing.
+to be uploaded to an FPGA for testing. The code used can be found in Appendix A.
 
 \paragraph{Part 2:}
 
-Instead of defining all of the logic gates manually, VHDL also supports
+Instead of defining all of the logic gates in a network manually, VHDL also supports
 behavioural programming.
 This style is different in that the synthesizer will decide how to implement
-the code in logic, instead of the programmer doing the heavy lifting.
-By utilizing a case statement, writing the program could be made easier,
-as the designer does not have to worry about exactly how the logic should work.
-However, this method does take some of the control over how the circuit operates
-away from the designer.
+the code in logic, rather that making the programmer do the heavy lifting.
+Utilizing a case statement in code, the programmer defines the values in the output vector for each possible input combination
+without having to worry exactly how the logic should work in hardware.
+While this method is easier for the designer, it does take away some of the control over how the circuit operates.
 
 \paragraph{Part 3:}
 
-By using one of the inbuilt clocks on the FPGA board, a counter can be used to implement an
-upcounter with a delay.
+Using one of the built-in clocks on the FPGA board, it is fairly simple to implement an upcounter with a specific delay.
 The signal from the clock can be sent to an internal counter which can
-be divided to fit a 1 second signal, which can then go to another counter, which can output directly to
-the 7 segment display.
+be divided to fit a 1 second signal, which can then be stored in another counter. This can finally be output directly to the 7-segment display.
 
 \paragraph{Part 4:}
 
-If the signal controlling which of the two displays are on is inverted 
-extremely quickly (more than approximately 200Hz), we can take advantage of the limitations
-of the human eye to make it appear that both displays are on at the same time.
+Beyond the 7 inputs for the segments, the display used also has a line for enabling/disabling. The FPGA board in the lab has two displays mounted to it, with both displays connected to the same enable line in complement to eachother (ie. only one display can be on at a time). If the signal controlling which of the two displays are on is inverted 
+extremely quickly (\textgreater\ $\sim$200Hz), we can take advantage of the limitations
+of the human eye to make it appear as if both displays are on at the same time.
 This functionality can easily be implemented by using behavioural logic to
 toggle the control signal on the positive edge of every clock cycle.
 
 \section{Results}
 
 For all parts of this lab, the display behaved as expected,
-displaying the correct hexadecimal digit for the 4-bit input.
-Using the example code, the counter updated once a second, and we were able
-to show this information on two screens at once.
-
-Pictures of the display in action can be found at the end of this document, in figures 1 and 2.
+showing the correct hexadecimal digit for the 4-bit input.
+Using the example code made available on eclass, the counter updated once a second, and we were able
+to show this information on both screens at once.
+Pictures of the display in action can be found in Appendix B in Figures 1 and 2.
 
 \section{Discussion \& Conclusion}
 
 While structural code in VHDL allows a designer to design extremely efficient and useful
 logic circuits, behavioural code allows the designer to offload much of the tedious or complex
 portions of the design onto the synthesizer.
-This means that new features and functionality can be quickly and simply designed.
+This means that new features and functionality can be quickly and simply designed, while more time/space sensitive applications which require more significant analysis and optimization can still be implemented in the language.
 
-\newpage
+%\newpage
+\vskip 2cm
 
-
-\appendix
+\begin{appendices}
 
 \section{Code}
 
@@ -152,26 +154,27 @@ begin
      out_7seg(5) <= I(3) or I(4) or I(5) or I(6) or I(8) or I(12) or I(17);
      out_7seg(6) <= I(4) or I(5) or I(6) or I(9) or I(17) or I(18);
 
-
 end Behavioral;
 \end{lstlisting}
 
 \section{Images}
 
     \begin{figure}[H]
+	\centering
         % Mess around with widths later
         \includegraphics[width=125mm]{display_single.jpg}
-        \caption{Single-character hexadecimal deisplay.}
+        \caption{Single-character hexadecimal display.}
         \label{fig:display_single}
     \end{figure}
 
     
     \begin{figure}[H]
+	\centering
         % Mess around with widths later
         \includegraphics[width=125mm]{counter_dual.jpg}
-        \caption{Dual character upcounter.}
+        \caption{Both displays operating seemingly at the same time.}
         \label{fig:counter_dual}
     \end{figure}
-
+\end{appendices}
 
 \end{document}

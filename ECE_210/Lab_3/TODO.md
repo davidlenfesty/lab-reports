@@ -1,2 +1,1 @@
-- Add code for the case statements? I think it'd be a lot better if it were there
-- Look over the generated pdf
+- Hand in

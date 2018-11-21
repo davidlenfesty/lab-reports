@@ -67,7 +67,7 @@ Based on the 4-bit input, a separate Karnaugh map for each segment of the displa
 were found which would show all of the  desired output numbers/letters with the smallest number of network inputs and logic gates. These values were then connected to the appropriate display segments.
 Performing such an analysis reduced the number of discrete logic elements vastly.
 Once these signals were found, they were transcribed into a VHDL file,
-to be uploaded to an FPGA for testing. The code used can be found in Appendix A.
+to be uploaded to an FPGA for testing. The code used can be found in Appendix A.1.
 
 \paragraph{Part 2:}
 
@@ -78,6 +78,7 @@ the code in logic, rather that making the programmer do the heavy lifting.
 Utilizing a case statement in code, the programmer defines the values in the output vector for each possible input combination
 without having to worry exactly how the logic should work in hardware.
 While this method is easier for the designer, it does take away some of the control over how the circuit operates.
+The VHDL used for this design can be found in Appendix A.2.
 
 \paragraph{Part 3:}
 
@@ -114,6 +115,8 @@ This means that new features and functionality can be quickly and simply designe
 \begin{appendices}
 
 \section{Code}
+
+    \subsection{Structural Design}
 
 \begin{lstlisting}[language=VHDL]
 entity part1 is
@@ -155,6 +158,41 @@ begin
      out_7seg(6) <= I(4) or I(5) or I(6) or I(9) or I(17) or I(18);
 
 end Behavioral;
+\end{lstlisting}
+
+\newpage
+
+    \subsection{Behavioural Design}
+
+\begin{lstlisting}[language=VHDL]
+entity part2 is
+    Port ( sw : in STD_LOGIC_VECTOR (3 downto 0);
+           out_7seg : out STD_LOGIC_VECTOR (6 downto 0);
+           CC : out STD_LOGIC);
+end part2;
+
+architecture Behavioral of part1 is
+begin
+    case sw is
+        when "0000" => out_7seg <= "0111111";
+        when "0001" => out_7seg <= "0000110";
+        when "0010" => out_7seg <= "1011011";
+        when "0011" => out_7seg <= "1001111";
+        when "0100" => out_7seg <= "1100110";
+        when "0101" => out_7seg <= "1101101";
+        when "0110" => out_7seg <= "1111101";
+        when "0111" => out_7seg <= "0000111";
+        when "1000" => out_7seg <= "1111111";
+        when "1001" => out_7seg <= "1101111";
+        when "1010" => out_7seg <= "1110111";
+        when "1111" => out_7seg <= "1111100";
+        when "1100" => out_7seg <= "0111001";
+        when "1101" => out_7seg <= "1011110";
+        when "1110" => out_7seg <= "1111001";
+        when "1111" => out_7seg <= "1111001";
+        other => out7_seg <= "0000000";
+    end case
+end Behavioural;
 \end{lstlisting}
 
 \section{Images}
